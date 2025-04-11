@@ -9,11 +9,86 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <header>
+        <div class="container">
+            <a href="index.html" class="logo"><i class="fas fa-dumbbell"></i>FitnessPro</a>
+            <nav>
+                <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+
+                <ul class="mega-menu" id="main-menu">
+                    <li><a href="index.html#hero">Inicio</a></li>
+
+                    <li class="has-submenu">
+                        <a>Servicios</a>
+                        <div class="menu-desplegable">
+                            <div class="columna-menu">
+                                <h4><a href="subpaginas/clases.html">Clases</a></h4>
+                            </div>
+                            <div class="columna-menu">
+                                <h4><a href="subpaginas/entrenadores.html">Entrenadores</a></h4>
+                            </div>
+                            <div class="columna-menu">
+                                <h4><a href="subpaginas/precios.html">Precios</a></h4>
+                            </div>
+                            <div class="columna-menu">
+                                <h4><a href="subpaginas/blog.html">Blog</a></h4>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li><a href="index.html#testimonios">Testimonios</a></li>
+                    <li><a href="index.html#footer">Contacto</a></li>
+                    <li>
+                        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">
+                            <i class="fas fa-sun" aria-hidden="true"></i>  <i class="fas fa-moon" aria-hidden="true"></i> </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <footer id="footer">
+        <div class="container">
+            <div class="footer-contenido">
+                <div class="columna-footer">
+                    <h4>Inscribirse al Gym</h4>
+                    <form class="form-newsletter" onsubmit="redirigirFormulario(event)">
+                        <label for="email-newsletter" class="sr-only">Correo electrónico</label>
+                        <input type="email" id="email-newsletter" placeholder="Tu correo electrónico" required>
+                        <button type="submit" class="btn">Suscribirse</button>
+                    </form>
+                </div>
+                <div class="columna-footer">
+                    <h4>Síguenos</h4>
+                    <div class="redes-sociales">
+                        <a href="#" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Síguenos en Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Síguenos en Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="columna-footer">
+                    <h4>Encuéntranos</h4>
+                    <address>
+                        Av. Siempre Viva 742<br>
+                        San Salvador de Jujuy, Jujuy<br>
+                        Argentina
+                    </address>
+                    <div class="mapa-container">
+                       <iframe
+                           src="https://www.openstreetmap.org/export/embed.html?bbox=-65.3318%2C-24.2109%2C-65.2718%2C-24.1709&layer=mapnik&marker=-24.1909%2C-65.3018"
+                           width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                           referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Gimnasio FitnessPro"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year">2025</span> Gimnasio FitnessPro. Todos los derechos reservados.</p>
+        </div>
     </footer>
 </body>
 </html>
