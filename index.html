@@ -51,6 +51,103 @@
             </nav>
         </div>
     </header>
+    <section id="hero" class="hero-section">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="media/introduccion.mp4" type="video/mp4">
+            Tu navegador no soporta el video.
+        </video>
+
+        <div class="hero-overlay">
+            <h1 class="hero-title">¡Desafiá tus límites!</h1>
+            <p class="hero-subtitle">Entrenamientos que transforman cuerpo y mente</p>
+            <a href="/subpaginas/formulario.html" class="btn-hero">Inscribirse</a>
+        </div>
+    </section>
+    <section class="clases-destacadas">
+        <h2>Clases Destacadas</h2>
+        <div class="tarjetas-clases">
+            <article class="card">
+                <img src="media/Clases/crossfit.webp" alt="Clase de Crossfit">
+                <div class="card-content">
+                    <h3>Crossfit</h3>
+                    <p>Entrenamiento de alta intensidad con ejercicios de levantamiento de pesas, gimnasia y condicionamiento metabólico.</p>
+                </div>
+            </article>
+            <article class="card">
+                <img src="media/Clases/musculacion.jpeg" alt="Clase de Musculación">
+                <div class="card-content">
+                    <h3>Musculacion</h3>
+                    <p>Entrenamiento con pesas para aumentar la masa muscular y la fuerza.</p>
+                </div>
+            </article>
+            <article class="card">
+                <img src="media/Clases/funcional.jpg" alt="Entrenamiento Funcional">
+                <div class="card-content">
+                    <h3>Funcional</h3>
+                    <p>Fuerza, coordinación y resistencia con circuitos dinámicos.</p>
+                </div>
+            </article>
+            <article class="card">
+                <img src="media/Clases/powerlifting.jpg" alt="Clase de Powerlifting">
+                <div class="card-content">
+                    <h3>PowerLifting</h3>
+                    <p>Levantamiento de pesas con enfoque a la fuerza máxima.</p>
+                </div>
+            </article>
+        </div>
+        <div class="card ver-mas">
+            <a href="subpaginas/clases.html">
+                <div class="card-vermas">
+                    <h3>VER MÁS</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+    <section class="contador">
+        <h2><span id="contador-socios">0</span>+ socios satisfechos</h2>
+    </section>
+    <section class="testimonios" id="testimonios">
+        <h2>Lo que dicen nuestros socios</h2>
+        <div class="container">
+            <div class="carrusel-css">
+                <input type="radio" name="slide" id="slide1" checked aria-hidden="true">
+                <input type="radio" name="slide" id="slide2" aria-hidden="true">
+                <input type="radio" name="slide" id="slide3" aria-hidden="true">
+                <input type="radio" name="slide" id="slide4" aria-hidden="true">
+                <input type="radio" name="slide" id="slide5" aria-hidden="true">
+                <div class="slides">
+                    <article class="slide" id="testimonio1">
+                        <blockquote>"¡El mejor gimnasio! Excelentes instalaciones y entrenadores muy profesionales. Resultados visibles en poco tiempo."</blockquote>
+                        <cite>- Enzo P.</cite>
+                    </article>
+                    <article class="slide" id="testimonio2">
+                        <blockquote>"El área de musculación está completísima. Me encanta que siempre haya alguien para ayudarte con la técnica."</blockquote>
+                        <cite>- Carla V.</cite>
+                    </article>
+                    <article class="slide" id="testimonio3">
+                        <blockquote>"Logré mis objetivos de pérdida de peso gracias al seguimiento personalizado. ¡El equipo de FitnessPro es increíble!"</blockquote>
+                        <cite>- Claudio E.</cite>
+                    </article>
+                    <article class="slide" id="testimonio4">
+                        <blockquote>"Empecé por salud y terminé amándolo. Bajé 12 kilos en 4 meses. El ambiente es de lo mejor y siempre hay buena energía."</blockquote>
+                        <cite>- Mauro L.</cite>
+                    </article>
+                    <article class="slide" id="testimonio5">
+                        <blockquote>"Nunca fui fan del ejercicio, pero desde que me uní a este gym, voy con ganas todos los días. Las clases son súper dinámicas y los profes tienen mucha onda."</blockquote>
+                        <cite>- Sofia R.</cite>
+                    </article>
+                </div>
+                <div class="navegacion-carrusel">
+                    <label for="slide1" aria-label="Ver testimonio 1"></label>
+                    <label for="slide2" aria-label="Ver testimonio 2"></label>
+                    <label for="slide3" aria-label="Ver testimonio 3"></label>
+                    <label for="slide4" aria-label="Ver testimonio 4"></label>
+                    <label for="slide5" aria-label="Ver testimonio 5"></label>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <footer id="footer">
         <div class="container">
             <div class="footer-contenido">
@@ -91,4 +188,102 @@
         </div>
     </footer>
 </body>
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainMenu = document.getElementById('main-menu');
+
+    menuToggle.addEventListener('click', () => {
+        mainMenu.classList.toggle('open');
+        const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !expanded);
+    });
+
+    document.querySelectorAll('.mega-menu .has-submenu > a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const li = link.parentElement;
+                li.classList.toggle('show-submenu');
+            }
+        });
+    });
+</script>
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme');
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+    }
+  }
+
+  if (currentTheme) {
+    applyTheme(currentTheme);
+  } else if (prefersDarkScheme.matches) {
+    applyTheme('dark');
+  } else {
+    applyTheme('light');
+  }
+
+
+  themeToggleBtn.addEventListener('click', () => {
+    const theme = document.documentElement.hasAttribute('data-theme') ? 'light' : 'dark';
+    applyTheme(theme);
+  });
+</script>
+<script>
+    function animarContador(id, objetivo, duracion) {
+      const elemento = document.getElementById(id);
+      let inicio = 0;
+      const incremento = Math.ceil(objetivo / (duracion / 20));
+
+      const contador = setInterval(() => {
+        inicio += incremento;
+        if (inicio >= objetivo) {
+          elemento.textContent = objetivo;
+          clearInterval(contador);
+        } else {
+          elemento.textContent = inicio;
+        }
+      }, 20);
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animarContador('contador-socios', 500, 1500);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    observer.observe(document.querySelector('.contador'));
+</script>
+<script>
+    const slides = document.querySelectorAll('.carrusel-css input[name="slide"]');
+    let index = 0;
+      setInterval(() => {
+      slides[index].checked = false;
+      index = (index + 1) % slides.length;
+      slides[index].checked = true;
+    }, 5000);
+</script>
+<script>
+    function redirigirFormulario(event) {
+      event.preventDefault();
+      const email = document.getElementById('email-newsletter').value;
+      // Asegúrate que la ruta 'subpaginas/formulario.html' es correcta desde la raíz del sitio
+      window.location.href = 'subpaginas/formulario.html?email=' + encodeURIComponent(email);
+    }
+</script>
+<script>
+  // Actualizar año en el footer
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
 </html>
