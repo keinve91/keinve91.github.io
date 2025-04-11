@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/media/icon.png" type="image/png">
+  <title>FitnessPro</title>
+  <link rel="stylesheet" href="formulario.css">
+</head>
+<body>
+  <form id="formulario">
+    <h2>📋 Formulario de Inscripción</h2>
+
+    <label for="nombre">Nombre Completo:</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" pattern="[0-9]{7,15}" title="Ingresa un número de teléfono válido (solo números, entre 7 y 15 dígitos)" required /> <label for="plan">Elige tu plan:</label>
+    <select id="plan" name="plan" required>
+      <option value="">-- Seleccionar --</option>
+      <option value="estandar">Musculación Estándar</option>
+      <option value="premium">Musculación Premium</option>
+      <option value="sueltas">Plan Clases Sueltas (Acceso a 2 clases)</option> </select>
+
+    <div id="opcion-pago" style="display: none;">
+      <label>Frecuencia de Pago:</label>
+      <div class="radio-group">
+          <input type="radio" id="pago-mensual" name="frecuencia_pago" value="mensual" checked>
+          <label for="pago-mensual">Mensual</label>
+          <input type="radio" id="pago-anual" name="frecuencia_pago" value="anual">
+          <label for="pago-anual">Anual</label>
+       </div>
+    </div>
+
+    <div id="precio-calculado" style="display: none;"></div>
+
+    <div id="pregunta-instructor" style="display: none;">
+      <label>¿Deseas un instructor personal?</label>
+      <select id="quiere-instructor">
+        <option value="no">No</option>
+        <option value="si">Sí (Costo adicional)</option>
+      </select>
+    </div>
+
+    <div id="opcion-instructor" style="display: none;">
+      <label>Selecciona tu instructor:</label>
+      <select id="instructores" name="instructor_seleccionado"> <option value="">-- Seleccionar --</option>
+        <option value="camila">Camila Gutiérrez (mañana)</option>
+        <option value="ariel">Ariel Moreno (mañana)</option>
+        <option value="malena">Malena Farfán (tarde)</option>
+        <option value="matias">Matías Álvarez (tarde/noche)</option>
+      </select>
+    </div>
+
+    <div id="clases-premium" style="display: none;">
+      <label>Elige 1 clase incluida (Plan Premium):</label>
+      <select id="clase-premium" name="clase_premium_elegida"> <option value="">-- Seleccionar Clase --</option>
+        <option value="Crossfit">Crossfit</option>
+        <option value="BodyPump">BodyPump</option>
+        <option value="Zumba">Zumba</option>
+        <option value="Funcional">Funcional</option>
+        <option value="Powerlifting">Powerlifting</option>
+        <option value="Calistenia">Calistenia</option>
+        <option value="Spinning">Spinning</option>
+        <option value="GAP">GAP</option>
+        <option value="Elongacion">Elongación</option>
+      </select>
+    </div>
+
+    <div id="clases-sueltas" style="display: none;">
+      <label>Elige 2 clases para tu plan:</label>
+      <select multiple id="clases-sueltas-select" size="5" name="clases_sueltas_elegidas"> <option value="Crossfit">Crossfit</option>
+        <option value="BodyPump">BodyPump</option>
+        <option value="Zumba">Zumba</option>
+        <option value="Funcional">Funcional</option>
+        <option value="Powerlifting">Powerlifting</option>
+        <option value="Calistenia">Calistenia</option>
+        <option value="Spinning">Spinning</option>
+        <option value="GAP">GAP</option>
+        <option value="Elongacion">Elongación</option>
+        <option value="Boxeo">Boxeo</option>
+        <option value="Kickboxing">Kickboxing</option>
+      </select>
+      <p id="clases-error" style="color:red; display:none;">Debes seleccionar exactamente 2 clases.</p>
+    </div>
+
+    <div class="spinner" id="spinner"></div>
+    <button type="submit">Enviar Inscripción</button>
+  </form>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3>¡Formulario enviado correctamente!</h3>
+      <p>Gracias por suscribirte al gimnasio 💪. Recibirás un correo con los próximos pasos.</p>
+      <button onclick="window.location.href='../index.html'"> Volver al inicio
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const planSelect = document.getElementById('plan');
+    const opcionPagoDiv = document.getElementById('opcion-pago');
+    const precioCalculadoDiv = document.getElementById('precio-calculado');
+    const preguntaInstructorDiv = document.getElementById('pregunta-instructor');
+    const quiereInstructorSelect = document.getElementById('quiere-instructor');
+    const opcionInstructorDiv = document.getElementById('opcion-instructor');
+    const instructoresSelect = document.getElementById('instructores');
+    const clasesPremiumDiv = document.getElementById('clases-premium');
+    const clasePremiumSelect = document.getElementById('clase-premium');
+    const clasesSueltasDiv = document.getElementById('clases-sueltas');
+    const clasesSueltasSelect = document.getElementById('clases-sueltas-select');
+    const clasesErrorP = document.getElementById('clases-error');
+    const form = document.getElementById('formulario');
+    const spinner = document.getElementById('spinner');
+    const modal = document.getElementById('modal');
+
+    const precios = {
+        estandar: { mensual: 25000, anual: 250000 },
+        premium: { mensual: 35000, anual: 350000 },
+        sueltas: { mensual: 28000, anual: 280000 },
+        instructor: 15000
+    };
+
+    function actualizarVisibilidadYPrecio() {
+      const planValor = planSelect.value;
+      const quiereInst = quiereInstructorSelect.value === 'si';
+      const frecuencia = opcionPagoDiv.querySelector('input[name="frecuencia_pago"]:checked')?.value || 'mensual';
+
+      let mostrarOpcionPago = false;
+      let mostrarPreguntaInstructor = false;
+      let mostrarOpcionInstructor = false;
+      let mostrarClasesPremium = false;
+      let mostrarClasesSueltas = false;
+      let precioFinal = 0;
+      let textoPrecio = '';
+
+      if (planValor === 'estandar' || planValor === 'premium' || planValor === 'sueltas') {
+          mostrarOpcionPago = true;
+
+          if (precios[planValor]?.[frecuencia] !== undefined) {
+              precioFinal = precios[planValor][frecuencia];
+              let planNombre = planSelect.options[planSelect.selectedIndex].text;
+              textoPrecio = `${planNombre} (${frecuencia}): $${precioFinal.toLocaleString('es-AR')}`;
+          } else {
+              precioFinal = 0;
+              textoPrecio = "Selecciona plan y frecuencia";
+              console.error(`Precio no definido para plan '${planValor}' con frecuencia '${frecuencia}'`);
+          }
+
+          if (planValor === 'estandar' || planValor === 'premium') {
+              mostrarPreguntaInstructor = true;
+              mostrarOpcionInstructor = quiereInst;
+              if (quiereInst) {
+                  let costoInstructor = 0;
+                  let textoFreqInstructor = '';
+                  if (frecuencia === 'anual') {
+                      costoInstructor = precios.instructor * 12;
+                      textoFreqInstructor = '(Anual)';
+                  } else {
+                      costoInstructor = precios.instructor;
+                      textoFreqInstructor = '(Mensual)';
+                  }
+                  precioFinal += costoInstructor;
+                  textoPrecio += ` + Instructor ${textoFreqInstructor}: $${costoInstructor.toLocaleString('es-AR')}`;
+              }
+          } else {
+              quiereInstructorSelect.value = 'no';
+              mostrarPreguntaInstructor = false;
+              mostrarOpcionInstructor = false;
+          }
+
+          if (planValor === 'premium') {
+              mostrarClasesPremium = true;
+          } else if (planValor === 'sueltas') {
+              mostrarClasesSueltas = true;
+          }
+
+      }
+
+      opcionPagoDiv.style.display = mostrarOpcionPago ? 'block' : 'none';
+      preguntaInstructorDiv.style.display = mostrarPreguntaInstructor ? 'block' : 'none';
+      opcionInstructorDiv.style.display = mostrarOpcionInstructor ? 'block' : 'none';
+      clasesPremiumDiv.style.display = mostrarClasesPremium ? 'block' : 'none';
+      clasesSueltasDiv.style.display = mostrarClasesSueltas ? 'block' : 'none';
+
+      if (precioFinal > 0 && mostrarOpcionPago) {
+          precioCalculadoDiv.textContent = `Total ${textoPrecio} = $${precioFinal.toLocaleString('es-AR')}`;
+          precioCalculadoDiv.style.display = 'block';
+      } else {
+          precioCalculadoDiv.style.display = 'none';
+      }
+
+      if (!mostrarClasesSueltas) {
+           Array.from(clasesSueltasSelect.options).forEach(opt => {
+               opt.selected = false;
+               opt.disabled = false;
+           });
+           clasesErrorP.style.display = 'none';
+      }
+      if (!mostrarClasesPremium) {
+          clasePremiumSelect.selectedIndex = 0;
+      }
+      if (!mostrarOpcionInstructor) {
+          instructoresSelect.selectedIndex = 0;
+      }
+  } 
+  planSelect.addEventListener('change', actualizarVisibilidadYPrecio);
+  quiereInstructorSelect.addEventListener('change', actualizarVisibilidadYPrecio);
+  opcionPagoDiv.addEventListener('change', (event) => {
+      if (event.target.type === 'radio' && event.target.name === 'frecuencia_pago') {
+          actualizarVisibilidadYPrecio();
+      }
+  });
+
+  clasesSueltasSelect.addEventListener('change', () => {
+      const selectedOptions = Array.from(clasesSueltasSelect.selectedOptions);
+      const allOptions = Array.from(clasesSueltasSelect.options);
+      const maxSeleccion = 2;
+
+      if (selectedOptions.length >= maxSeleccion) {
+          allOptions.forEach(opt => {
+              if (!opt.selected) opt.disabled = true;
+          });
+          clasesErrorP.style.display = 'none';
+      } else {
+          allOptions.forEach(opt => opt.disabled = false);
+      }
+  });
+
+  form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let valido = true;
+
+      if (planSelect.value === 'sueltas') {
+          const selectedSueltas = Array.from(clasesSueltasSelect.selectedOptions);
+          if (selectedSueltas.length !== 2) {
+              clasesErrorP.style.display = 'block';
+              clasesSueltasSelect.focus();
+              valido = false;
+          } else {
+              clasesErrorP.style.display = 'none';
+          }
+      }
+
+      if (planSelect.value !== 'sueltas' && quiereInstructorSelect.value === 'si' && instructoresSelect.value === '') {
+          alert('Por favor, selecciona un instructor.');
+          instructoresSelect.focus();
+          valido = false;
+      }
+
+       if (planSelect.value === 'premium' && clasePremiumSelect.value === '') {
+            alert('Por favor, selecciona tu clase incluida en el plan Premium.');
+            clasePremiumSelect.focus();
+            valido = false;
+       }
+
+      if (valido && form.checkValidity()) {
+          spinner.style.display = 'block';
+
+          console.log("Enviando formulario...");
+
+          setTimeout(() => {
+              spinner.style.display = 'none';
+              modal.style.display = 'flex';
+          }, 2000);
+
+      } else if (!valido) {
+          console.log("Validación personalizada fallida.");
+      }
+       else {
+          console.log("Validación HTML5 fallida.");
+           form.reportValidity();
+      }
+  });
+
+  actualizarVisibilidadYPrecio();
+
+</script>
+
+<script>
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const emailParam = params.get('email');
+        const emailInput = document.getElementById('email');
+
+        if (emailParam && emailInput) {
+            emailInput.value = decodeURIComponent(emailParam);
+            if (emailInput.checkValidity()) {
+                 emailInput.style.borderColor = '#28a745';
+            } else {
+                 emailInput.style.borderColor = '#dc3545';
+            }
+        }
+    } catch (error) {
+        console.error("Error al procesar parámetro email:", error);
+    }
+</script>
+
+</body>
+</html>

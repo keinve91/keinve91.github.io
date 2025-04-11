@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es"> 
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/media/icon.png" type="image/png">
+        <title>FitnessPro</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="precios.css">
+    </head>
+    
+    <body>
+        <header>
+            
+          <div class="container">
+              <a href="/index.html" class="logo"><i class="fas fa-dumbbell"></i>FitnessPro</a>
+              <nav>
+                  <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+                      <i class="fas fa-bars" aria-hidden="true"></i>
+                  </button>
+      
+                  <ul class="mega-menu" id="main-menu">
+                      <li><a href="/index.html#hero">Inicio</a></li>
+      
+                      <li class="has-submenu">
+                          <a>Servicios</a>
+                          <div class="menu-desplegable">
+                              <div class="columna-menu">
+                                  <h4><a href="clases.html">Clases</a></h4>
+                              </div>
+                              <div class="columna-menu">
+                                  <h4><a href="entrenadores.html">Entrenadores</a></h4>
+
+                              </div>
+                              <div class="columna-menu">
+                                  <h4><a href="precios.html">Precios</a></h4>
+                              </div>
+                              <div class="columna-menu">
+                                <h4><a href="blog.html">Blog</a></h4>
+                            </div>
+                          </div>
+                      </li>
+      
+                      <li><a href="/index.html#testimonios">Testimonios</a></li>
+                      <li><a href="#footer">Contacto</a></li>
+                      <li>
+                        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">
+                            <i class="fas fa-sun" aria-hidden="true"></i>  <i class="fas fa-moon" aria-hidden="true"></i> </button>
+                    </li>
+                  </ul>
+              </nav>
+          </div>
+      </header>
+      <main>
+        <section>
+            <section>
+                <h1 style="text-align: center;"><br>Comparador de Planes</h1>
+            </section>
+        
+            <div class="toggle-container">
+                <span>Mensual</span>
+                <label class="switch" for="toggle">
+                    <span class="slider"></span>
+                </label>
+                <span>Anual</span>
+            </div>
+            <input type="checkbox" id="toggle" class="toggle-input-hidden">
+        
+            <div class="plan-cards-container">
+        
+                <div class="plan-card">
+                    <h3 class="plan-title">Musculación Estándar</h3>
+                    <div class="plan-price">
+                        <span class="price-monthly">$25.000 <span class="period">/mes</span></span>
+                        <span class="price-anual">$250.000 <span class="period">/año</span></span>
+                    </div>
+                    <div class="plan-details">
+                        <div class="details-monthly">
+                            <span class="tooltip">Acceso ilimitado
+                                <span class="tooltiptext">Solo área de musculación</span>
+                            </span>
+                        </div>
+                        <div class="details-anual">
+                             <span class="tooltip">Acceso ilimitado
+                                <span class="tooltiptext">Paga 10 meses y entrena todo el año</span>
+                            </span>
+                        </div>
+                    </div>
+                    </div>
+        
+                <div class="plan-card">
+                     <h3 class="plan-title">Musculación Premium</h3>
+                     <div class="plan-price">
+                        <span class="price-monthly">$35.000 <span class="period">/mes</span></span>
+                        <span class="price-anual">$350.000 <span class="period">/año</span></span>
+                    </div>
+                    <div class="plan-details">
+                         <div class="details-monthly">
+                             <span class="tooltip">Incluye 1 clase
+                                <span class="tooltiptext">Crossfit, Zumba, GAP, etc.</span>
+                            </span>
+                         </div>
+                         <div class="details-anual">
+                             <span class="tooltip">Incluye 1 clase fija
+                                <span class="tooltiptext">A elección por todo el año</span>
+                            </span>
+                         </div>
+                    </div>
+                     </div>
+        
+                <div class="plan-card">
+                     <h3 class="plan-title">Clases Sueltas (x2)</h3>
+                     <div class="plan-price">
+                        <span class="price-monthly">$28.000 <span class="period">/mes</span></span>
+                        <span class="price-anual">$280.000 <span class="period">/año</span></span>
+                    </div>
+                    <div class="plan-details">
+                         <div class="details-monthly">
+                             <span class="tooltip">2 clases mensuales
+                                <span class="tooltiptext">A elección entre 9 disciplinas</span>
+                            </span>
+                         </div>
+                         <div class="details-anual">
+                             <span class="tooltip">24 clases al año
+                                <span class="tooltiptext">2 por mes durante 12 meses</span>
+                            </span>
+                         </div>
+                    </div>
+                     </div>
+        
+            </div>
+        </section>
+      </main>
+      <footer id="footer">
+        <div class="container">
+            <div class="footer-contenido">
+                <div class="columna-footer">
+                    <h4>Inscribirse al Gym</h4>
+                    <form class="form-newsletter" onsubmit="redirigirFormulario(event)">
+                      <label for="email-newsletter" class="sr-only">Correo electrónico</label>
+                      <input type="email" id="email-newsletter" placeholder="Tu correo electrónico" required>
+                      <button type="submit" class="btn">Suscribirse</button>
+                    </form>
+                </div>
+                <div class="columna-footer">
+                    <h4>Síguenos</h4>
+                    <div class="redes-sociales">
+                        <a href="#" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Síguenos en Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Síguenos en Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="columna-footer">
+                    <h4>Encuéntranos</h4>
+                    <address>
+                        Av. Siempre Viva 742<br>
+                        San Salvador de Jujuy, Jujuy<br>
+                        Argentina
+                    </address>
+                    <div class="mapa-container">
+                     <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=-65.3318%2C-24.2109%2C-65.2718%2C-24.1709&layer=mapnik&marker=-24.1909%2C-65.3018"
+                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Gimnasio FitnessPro"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year">2025</span> Gimnasio FitnessPro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainMenu = document.getElementById('main-menu');
+
+    menuToggle.addEventListener('click', () => {
+      mainMenu.classList.toggle('open');
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !expanded);
+    });
+
+    document.querySelectorAll('.mega-menu .has-submenu > a').forEach(link => {
+      link.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768) {
+              e.preventDefault();
+              const li = link.parentElement;
+              li.classList.toggle('show-submenu');
+          }
+      });
+    });
+</script>
+
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+    }
+    }
+    if (currentTheme) {
+    applyTheme(currentTheme);
+    } else if (prefersDarkScheme.matches) {
+    applyTheme('dark');
+    } else {
+    applyTheme('light'); 
+    }
+    themeToggleBtn.addEventListener('click', () => {
+    const theme = document.documentElement.hasAttribute('data-theme') ? 'light' : 'dark';
+    applyTheme(theme);
+    });
+</script>
+<script>
+    function redirigirFormulario(event) {
+    event.preventDefault();
+    const email = document.getElementById('email-newsletter').value;
+    window.location.href = '/subpaginas/formulario.html?email=' + encodeURIComponent(email);
+    }
+</script>
+<script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  
+      const toggleInput = document.getElementById('toggle');
+  
+      const switchLabel = document.querySelector('label.switch[for="toggle"]');
+  
+      function updateSwitchVisualState() {
+        if (toggleInput.checked) {
+          switchLabel.classList.add('is-active');
+        } else {
+          switchLabel.classList.remove('is-active');
+        }
+      }
+  
+      toggleInput.addEventListener('change', updateSwitchVisualState);
+  
+      updateSwitchVisualState();
+  
+    });
+  </script>
+</html>
